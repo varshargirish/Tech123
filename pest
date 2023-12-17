@@ -1,0 +1,104 @@
+import java.util.*;
+
+class Pest {
+    private String name;
+    private String type;
+
+    public Pest(String name, String type) {
+        this.name = name;
+        this.type = type;
+    }
+
+    // Getters and setters for Pest properties
+    // ...
+
+    @Override
+    public String toString() {
+        return "Pest: " + name + " - Type: " + type;
+    }
+
+    public String getType() {
+        return type;
+    }
+}
+
+class Client {
+    private String name;
+    private String address;
+
+    public Client(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
+
+    // Getters and setters for Client properties
+    // ...
+
+    @Override
+    public String toString() {
+        return "Client: " + name + " - Address: " + address;
+    }
+}
+
+class Service {
+    private Pest pest;
+    private Client client;
+    private Date date;
+
+    public Service(Pest pest, Client client, Date date) {
+        this.pest = pest;
+        this.client = client;
+        this.date = date;
+    }
+
+    // Getters and setters for Service properties
+    // ...
+
+    @Override
+    public String toString() {
+        return "Service: " + pest + " - " + client + " - Date: " + date;
+    }
+}
+
+class PestManagementSystem {
+    private Map<String, String> recommendedChemicals;
+
+    public PestManagementSystem() {
+        recommendedChemicals = new HashMap<>();
+        recommendedChemicals.put("Insect", "Insecticide A");
+        recommendedChemicals.put("Rodent", "Rodenticide B");
+        // Add more mappings as needed
+    }
+
+    public String suggestChemical(Pest pest) {
+        String pestType = pest.getType();
+        return recommendedChemicals.getOrDefault(pestType, "No specific recommendation found for pest type: " + pestType);
+    }
+}
+
+public class PestControlManagementSystem {
+    public static void main(String[] args) {
+        List<Pest> pests = new ArrayList<>();
+        pests.add(new Pest("Cockroach", "Insect"));
+        pests.add(new Pest("Rat", "Rodent"));
+
+        List<Client> clients = new ArrayList<>();
+        clients.add(new Client("Client A", "123 Main St"));
+        clients.add(new Client("Client B", "456 Elm St"));
+
+        List<Service> services = new ArrayList<>();
+        services.add(new Service(pests.get(0), clients.get(0), new Date()));
+        services.add(new Service(pests.get(1), clients.get(1), new Date()));
+
+        PestManagementSystem pestManagementSystem = new PestManagementSystem();
+
+        // Example usage - Display all services and suggest chemicals
+        for (Service service : services) {
+            System.out.println(service);
+            Pest pest = service.getPest();
+            String suggestedChemical = pestManagementSystem.suggestChemical(pest);
+            System.out.println("Suggested Chemical: " + suggestedChemical);
+            System.out.println("--------------------");
+        }
+    }
+}
